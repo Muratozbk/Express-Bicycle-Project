@@ -1,27 +1,26 @@
 // Create server with express
 const express = require('express');
 const app = express();
+const bicycles = require('./data/data.json')
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 //parse application
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
 
 app.get('/', (req, res) => {
-     res.send('<h1>Hi Murat</h1>')
+     return res.render('bicycles')
 });
 
-app.get('/about', (req, res) => {
-     res.json({
-          name: 'Murat'
-     })
-});
+app.get('/bicycle', (req, res) => {
+     console.log(req.query.id);
+     const bicycle = bicycles.find(b => b.id === req.query.id)
 
-app.post('/login', (req, res) => {
-     console.log(req.body.email);
-     console.log(req.body.password);
-
-     res.send('User login Successfully')
+     return res.render('overview', {
+          bicycle
+     });
 })
 
-app.listen(3000, () => console.log('Server is running at port 3000'));
-
+app.listen(3000, () => console.log('Server is running at port 3000'))
