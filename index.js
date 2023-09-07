@@ -11,7 +11,9 @@ app.use(express.static('public'));
 // app.use(express.json());
 
 app.get('/', (req, res) => {
-     return res.render('bicycles')
+     return res.render('bicycles', {
+          bicycles
+     })
 });
 
 app.get('/bicycle', (req, res) => {
